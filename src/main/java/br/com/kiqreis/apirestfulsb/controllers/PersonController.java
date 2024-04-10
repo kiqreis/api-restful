@@ -4,11 +4,12 @@ import br.com.kiqreis.apirestfulsb.dtos.PersonDto;
 import br.com.kiqreis.apirestfulsb.models.Person;
 import br.com.kiqreis.apirestfulsb.services.PersonService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,8 +34,8 @@ public class PersonController {
     }
 
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity<List<Person>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(personService.findAll());
+    public ResponseEntity<Page<Person>> findAll(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(personService.findAll(pageable));
     }
 
     @PutMapping(value = "/{id}", consumes = {"application/json", "application/xml", "application/x-yaml"},

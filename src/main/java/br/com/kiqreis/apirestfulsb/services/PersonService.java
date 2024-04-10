@@ -5,10 +5,11 @@ import br.com.kiqreis.apirestfulsb.dtos.PersonDto;
 import br.com.kiqreis.apirestfulsb.mapper.PersonMapper;
 import br.com.kiqreis.apirestfulsb.models.Person;
 import br.com.kiqreis.apirestfulsb.repositories.PersonRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -32,21 +33,21 @@ public class PersonService {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Person id not found"));
 
-        person.add(linkTo(methodOn(PersonController.class).findAll()).withRel("People list"));
+        person.add(linkTo(PersonController.class).withRel("People list"));
 
         return person;
     }
 
-    public List<Person> findAll() {
-        List<Person> personList = personRepository.findAll();
+    public Page<Person> findAll(Pageable pageable) {
+        Page<Person> personPage = personRepository.findAll(pageable);
 
-        if (!personList.isEmpty()) {
-            for (Person person : personList) {
+        if (!personPage.isEmpty()) {
+            for (Person person : personPage.getContent()) {
                 person.add(linkTo(methodOn(PersonController.class).findById(person.getId())).withSelfRel());
             }
         }
 
-        return personList;
+        return personPage;
     }
 
     @Transactional(rollbackFor = Exception.class)
