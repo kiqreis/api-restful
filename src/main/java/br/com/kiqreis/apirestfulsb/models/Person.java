@@ -35,15 +35,16 @@ public class Person extends RepresentationModel<Person> implements Serializable 
         this.email = email;
     }
 
+    public static PersonBuilder builder() {
+        return new PersonBuilder();
+    }
+
     public static class PersonBuilder {
 
         private UUID id;
         private String name;
         private String email;
 
-        public static PersonBuilder builder() {
-            return new PersonBuilder();
-        }
 
         public PersonBuilder id(UUID id) {
             this.id = id;

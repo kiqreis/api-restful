@@ -18,6 +18,35 @@ public class PersonDto implements Serializable {
     @Email
     private String email;
 
+    public PersonDto(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public static PersonDtoBuilder builder() {
+        return new PersonDtoBuilder();
+    }
+
+    public static class PersonDtoBuilder {
+
+        private String name;
+        private String email;
+
+        public PersonDtoBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public PersonDtoBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public PersonDto build() {
+            return new PersonDto(name, email);
+        }
+    }
+
     public String getName() {
         return name;
     }
