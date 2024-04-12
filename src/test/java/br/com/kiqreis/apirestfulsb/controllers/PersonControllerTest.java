@@ -100,7 +100,7 @@ class PersonControllerTest {
     @Test
     @DisplayName("update should return a person when the update is successful")
     void updateShouldReturnAPersonWhenSuccessful() {
-        Person person = personController.update(UUID.randomUUID(), PersonDtoCreator.personDtoSave()).getBody();
+        Person person = personController.update(UUID.randomUUID(), PersonDtoCreator.personUsageDtoToBeUpdated()).getBody();
 
         Assertions.assertThat(person).isNotNull()
                 .isEqualTo(PersonCreator.personUsageToBeUpdated());
@@ -109,7 +109,7 @@ class PersonControllerTest {
 
         Assertions.assertThat(person.getEmail()).isNotBlank();
 
-        Assertions.assertThatCode(() -> personController.update(UUID.randomUUID(), PersonDtoCreator.personDtoSave()))
+        Assertions.assertThatCode(() -> personController.update(UUID.randomUUID(), PersonDtoCreator.personUsageDtoToBeUpdated()))
                 .doesNotThrowAnyException();
     }
 

@@ -11,7 +11,7 @@ public class PersonDtoCreator {
                 .build();
     }
 
-    public static PersonDto personUsageToBeUpdated() {
+    public static PersonDto personUsageDtoToBeUpdated() {
         return PersonDto.builder()
                 .name(PersonCreator.personUsageToBeUpdated().getName())
                 .email(PersonCreator.personUsageToBeUpdated().getEmail())
