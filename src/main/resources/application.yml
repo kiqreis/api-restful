@@ -10,3 +10,7 @@ spring:
       hibernate:
         show_sql: false
     open-in-view: true
+springdoc:
+  pathsToMatch: /**/**
+  swagger-ui:
+    use-root-path: true
