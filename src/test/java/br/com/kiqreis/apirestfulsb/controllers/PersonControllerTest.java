@@ -37,19 +37,19 @@ class PersonControllerTest {
     void setUp() {
         PageImpl<Person> personPage = new PageImpl<>(List.of(PersonCreator.personUsage()));
 
-        BDDMockito.when(personService.findAll(ArgumentMatchers.any(Pageable.class)))
-                .thenReturn(personPage);
+        BDDMockito.given(personService.findAll(ArgumentMatchers.any(Pageable.class)))
+                .willReturn(personPage);
 
-        BDDMockito.when(personService.findById(ArgumentMatchers.any(UUID.class)))
-                .thenReturn(PersonCreator.personUsage());
+        BDDMockito.given(personService.findById(ArgumentMatchers.any(UUID.class)))
+                .willReturn(PersonCreator.personUsage());
 
-        BDDMockito.when(personService.save(ArgumentMatchers.any(PersonDto.class)))
-                .thenReturn(PersonCreator.personUsage());
+        BDDMockito.given(personService.save(ArgumentMatchers.any(PersonDto.class)))
+                .willReturn(PersonCreator.personUsage());
 
-        BDDMockito.when(personService.update(ArgumentMatchers.any(UUID.class), ArgumentMatchers.any(PersonDto.class)))
-                .thenReturn(PersonCreator.personUsageToBeUpdated());
+        BDDMockito.given(personService.update(ArgumentMatchers.any(UUID.class), ArgumentMatchers.any(PersonDto.class)))
+                .willReturn(PersonCreator.personUsageToBeUpdated());
 
-        BDDMockito.doNothing().when(personService).deleteById(ArgumentMatchers.any(UUID.class));
+        BDDMockito.willDoNothing().given(personService).deleteById(ArgumentMatchers.any(UUID.class));
     }
 
     @Test
@@ -88,10 +88,10 @@ class PersonControllerTest {
         Person person = personController.save(PersonDtoCreator.personDtoSave()).getBody();
 
         Assertions.assertThat(person.getName()).isNotBlank()
-                .isEqualTo(PersonCreator.personUsage().getName());
+                .isEqualTo(PersonCreator.personSave().getName());
 
         Assertions.assertThat(person.getEmail()).isNotBlank()
-                .isEqualTo(PersonCreator.personUsage().getEmail());
+                .isEqualTo(PersonCreator.personSave().getEmail());
 
         Assertions.assertThat(person).isNotNull()
                 .isEqualTo(PersonCreator.personUsage());
@@ -105,9 +105,11 @@ class PersonControllerTest {
         Assertions.assertThat(person).isNotNull()
                 .isEqualTo(PersonCreator.personUsageToBeUpdated());
 
-        Assertions.assertThat(person.getName()).isNotBlank();
+        Assertions.assertThat(person.getName()).isNotBlank()
+                .isEqualTo(PersonCreator.personUsageToBeUpdated().getName());
 
-        Assertions.assertThat(person.getEmail()).isNotBlank();
+        Assertions.assertThat(person.getEmail()).isNotBlank()
+                .isEqualTo(PersonCreator.personUsageToBeUpdated().getEmail());
 
         Assertions.assertThatCode(() -> personController.update(UUID.randomUUID(), PersonDtoCreator.personUsageDtoToBeUpdated()))
                 .doesNotThrowAnyException();
