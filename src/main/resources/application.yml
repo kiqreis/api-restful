@@ -1,5 +1,5 @@
 cors:
-  originsPatterns: "http://localhost:8080,http://localhost:3000"
+  originsPatterns: "http://localhost:8080,http://localhost:3000,http://localhost:8888"
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/api_restful?createDatabaseIfNotExist=true
