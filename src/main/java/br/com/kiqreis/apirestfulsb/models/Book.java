@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "books")
-public class Book extends RepresentationModel<Person> implements Serializable {
+public class Book extends RepresentationModel<Book> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
